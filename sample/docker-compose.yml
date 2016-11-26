@@ -1,0 +1,17 @@
+mha:
+  image: vvdocker-mha
+  links:
+    - master1:master1
+    - master2:master2
+    - slave1:slave1
+    - slave2:slave2
+
+master1:
+  image: mysql-master
+master2:
+  image: mysql-master
+
+slave1:
+  image: mysql-slave
+slave2:
+  image: mysql-slave

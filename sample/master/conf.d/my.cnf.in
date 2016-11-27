@@ -1,0 +1,25 @@
+[client]                           
+port=3306
+socket=/tmp/mysql.sock
+
+[mysqld]                           
+port=3306
+socket=/tmp/mysql.sock
+key_buffer_size=16M
+max_allowed_packet=8M
+
+server-id               = SERVERID
+log_bin                 = /var/log/mysql/mysql-bin.log
+bind-address            = 0.0.0.0
+
+[mysqldump]                        
+quick
+
+[mysqld_safe]                      
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+
+
+
+

@@ -26,3 +26,18 @@ RUN perl Makefile.PL
 RUN make
 RUN make install
 
+#mysql5.6
+RUN wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.14-debian6.0-x86_64.deb
+RUN dpkg -i mysql-5.6.14-debian6.0-x86_64.deb
+RUN apt-get -y upgrade
+RUN apt-get install -y libaio1 m4
+
+RUN install -d /data/mysql
+RUN /opt/mysql/server-5.6/scripts/mysql_install_db --datadir=/data/mysql
+ENV PATH "/opt/mysql/server-5.6/bin:$PATH"
+ENV MANPATH "/opt/mysql/server-5.6/man:$MANPATH"
+RUN mysql --version
+
+#mha log
+RUN mkdir -p /var/log/masterha/
+

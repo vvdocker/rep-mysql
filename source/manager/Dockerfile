@@ -10,16 +10,13 @@ RUN perl Makefile.PL
 RUN make
 RUN make install
 
-ADD ServerManager.pm /usr/local/share/perl/5.20.2/MHA/ServerManager.pm
-
 RUN mkdir -p /var/log/masterha/mysql/
 RUN cat /usr/local/share/perl/5.20.2/MHA/ServerManager.pm
 
-# sample をコピー
 RUN cp -p samples/scripts/master_ip_failover /usr/local/bin/
 RUN chmod 555 /usr/local/bin/master_ip_failover
 RUN mkdir -p /etc/masterha/conf
-#コピー----------------------------------------
+#サンプル----------------------------------------
 ADD test.conf /etc/mha.conf
 #----------------------------------------------
 

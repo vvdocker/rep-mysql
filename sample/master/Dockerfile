@@ -1,6 +1,4 @@
-FROM vvdocker/mha-node:24
-
-#RUN apt-get update
+FROM vvdocker/node:dev5
 
 ##########################
 # my.cnf
@@ -10,14 +8,8 @@ RUN m4 -DSERVERID=`date +%s` my.cnf.in > /etc/mysql/conf.d/my.cnf
 
 COPY init.d/startup.sql /docker-entrypoint-initdb.d/startup.sql
 
-RUN sed -i 's/.*session.*required.*pam_loginuid.so.*/session optional pam_loginuid.so/g' /etc/pam.d/sshd
-RUN mkdir -p /var/run/sshd
+COPY ./init.d/startup.sql /docker-entrypoint-initdb.d/startup.sql
+ENTRYPOINT ["docker-entrypoint.sh"]
 
-
-# ssh
-RUN mkdir .ssh
-RUN chmod -R 755 .ssh
-ADD id_rsa.pub ~/.ssh/id_rsa.pub
-RUN chmod -R 700 .ssh
-
-ADD ./init.d/startup.sql startup.sql
+EXPOSE 22 3306
+CMD mysql_install_db --datadir=/var/lib/mysql --user=mysql  && supervisord -n

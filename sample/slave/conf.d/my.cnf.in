@@ -10,7 +10,7 @@ max_allowed_packet=8M
 
 server-id               = SERVERID
 log_bin                 = /var/log/mysql/mysql-bin.log
-bind-address            = 0.0.0.0
+#bind-address            = 0.0.0.0
 
 [mysqldump]                        
 quick

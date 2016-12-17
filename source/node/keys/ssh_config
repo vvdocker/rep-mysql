@@ -1,0 +1,5 @@
+Host *
+  User root
+  IdentityFile /root/.ssh/id_rsa_mha
+  StrictHostKeyChecking no
+  CheckHostIP no

@@ -1,53 +1,24 @@
 mha:
-  image: vvdocker/mha:dev22
+  build: mha
   links:
     - master1:master_1
     - master2:master_2
     - slave1:slave_1
     - slave2:slave_2
-  command: masterha_check_repl --conf=/etc/mha.conf && masterha_manager --conf=/etc/mha.conf
-
+#  command: masterha_check_repl --conf=/etc/mha.conf && masterha_manager --conf=/etc/mha.conf
 master1:
   build: master
-  environment:
-    - MYSQL_USER=repl
-    - MYSQL_PASSWORD=replpass
-    - MYSQL_ROOT_PASSWORD=root
-  ports:
-    - "43306:3306"
-    - "22"
 master2:
   build: slave
-  environment:
-    - MYSQL_USER=repl
-    - MYSQL_PASSWORD=replpass
-    - MYSQL_ROOT_PASSWORD=root
-  ports:
-    - "13306:3306"
-    - "22"
   links:
     - master1:master_1
 slave1:
   build: slave
-  environment:
-    - MYSQL_USER=repl
-    - MYSQL_PASSWORD=replpass
-    - MYSQL_ROOT_PASSWORD=root
-  ports:
-    - "23306:3306"
-    - "22"
   links:
     - master1:master_1
     - master2:master_2
 slave2:
   build: slave
-  environment:
-    - MYSQL_USER=repl
-    - MYSQL_PASSWORD=replpass
-    - MYSQL_ROOT_PASSWORD=root
-  ports:
-    - "33306:3306"
-    - "22"
   links:
     - master1:master_1
     - master2:master_2

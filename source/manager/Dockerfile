@@ -60,4 +60,5 @@ RUN ls -la /root/.ssh/keys
 RUN chmod 400 ~/.ssh/keys/id_rsa
 RUN echo `cat ~/.ssh/keys/id_rsa.pub` >> ~/.ssh/authorized_keys
 
+EXPOSE 22
 CMD supervisord -n

@@ -7,6 +7,7 @@ port=3306
 socket=/tmp/mysql.sock
 key_buffer_size=16M
 max_allowed_packet=8M
+slave-skip-errors=1062
 
 server-id               = SERVERID
 log_bin                 = /var/log/mysql/mysql-bin.log

@@ -1,7 +1,13 @@
-FROM mysql:5.6
+#FROM mysql:5.6
+FROM ubuntu
 
 RUN apt-get -y update
 RUN apt-get -y install wget git
+
+RUN apt-get remove --purge mysql-server* mysql-common 
+RUN apt-get autoremove --purge 
+RUN rm -r /etc/mysql | true
+RUN rm -r /var/lib/mysql | true
 
 # MHA NODE
 RUN apt-get -y install build-essential devscripts dh-make fakeroot dpkg-dev debhelper libdbi-perl libmysqlclient-dev zlib1g-dev
@@ -29,9 +35,9 @@ RUN make install
 RUN mkdir -p /opt/mysql/server-5.6/data/
 RUN apt-get install -y libaio1 m4
 
-RUN apt-get -y install openssh-server ufw curl
+RUN apt-get -y install openssh-server ufw curl libmysqlclient-dev
 RUN mkdir /var/run/sshd
-RUN mysql --version
+RUN which mysql_config
 #ssh
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
@@ -48,10 +54,12 @@ ADD keys/ /root/.ssh/keys
 RUN chmod 400 ~/.ssh/keys/id_rsa
 RUN echo `cat ~/.ssh/keys/id_rsa.pub` >> ~/.ssh/authorized_keys
 
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections && \
+    echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections && \
+        apt-get -y install mysql-server
+#ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 22 3306
-CMD mysql_install_db --datadir=/var/lib/mysql --user=mysql  && supervisord -n
-
+#CMD mysql_install_db --datadir=/var/lib/mysql --user=mysql  && supervisord -n
+#CMD mysqld
 

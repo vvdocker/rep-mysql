@@ -1,4 +1,4 @@
-FROM vvdocker/node:20161225
+FROM vvdocker/node:20161229
 
 ##########################
 # my.cnf

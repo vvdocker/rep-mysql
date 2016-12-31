@@ -4,9 +4,17 @@ services:
     build: mha
   master_1:
     build: master
+    ports:
+      - '13306:3306'
   master_2:
     build: slave
+    ports:
+      - '23306:3306'
   slave_1:
     build: slave
+    ports:
+      - '33306:3306'
   slave_2:
     build: slave
+    ports:
+      - '43306:3306'

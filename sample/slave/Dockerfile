@@ -1,4 +1,4 @@
-FROM vvdocker/node:20161225
+FROM vvdocker/node:20161229
 
 ##########################
 # my.cnf
@@ -8,6 +8,7 @@ RUN m4 -DSERVERID=`date +%s` my.cnf.in > /etc/mysql/conf.d/my.cnf
 RUN chmod 775 -R /etc/mysql/conf.d
 
 COPY ./init.d/startup.sql /docker-entrypoint-initdb.d/startup.sql
+COPY ./conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
 RUN /etc/init.d/mysql restart && \
     mysql -uroot -proot  < /docker-entrypoint-initdb.d/startup.sql && \

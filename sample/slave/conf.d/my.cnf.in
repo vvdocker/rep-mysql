@@ -11,7 +11,6 @@ slave-skip-errors=1062
 
 server-id               = SERVERID
 log_bin                 = /var/log/mysql/mysql-bin.log
-#bind-address            = 0.0.0.0
 
 [mysqldump]                        
 quick
